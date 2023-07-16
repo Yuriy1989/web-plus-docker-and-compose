@@ -9,7 +9,7 @@ services:
     image: backend-release  
     env_file: .env
     ports:
-      - '4000:3000'
+      - 4000:3001
     depends_on:
       - postgres
     restart: always
@@ -24,7 +24,7 @@ services:
     image: frontend-release  
     env_file: .env
     ports:
-      - '8081:3000'
+      - 8081:3000
     restart: always
     networks:
       - frontend  
