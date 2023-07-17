@@ -7,10 +7,10 @@ RUN npm run build \
     && rm -rf ./src \
     && rm -rf node ./node_modules
 
-FROM nginx:1.23.1-alpine AS frontend
+FROM nginx:1.25.1-alpine AS frontend
 WORKDIR /app
-COPY --from=builderFront /app/build /usr/share/nginx/html/
+COPY --from=builderFront /app/build /usr/share/nginx/html
 COPY ./nginx/conf.d/default.conf /etc/nginx/conf.d
-EXPOSE 80
+EXPOSE 3000
 
 CMD [ "nginx", "-g", "daemon off;" ]

@@ -14,20 +14,19 @@ services:
       - postgres
     restart: always
     networks:
-      - backend    
+      - backend
 
   frontend:
     container_name: frontend
     build: 
       context: frontend
       dockerfile: Dockerfile.pub
-    image: frontend-release  
-    env_file: .env
+    image: frontend-release
     ports:
-      - 8081:3000
+      - 80:3000
     restart: always
     networks:
-      - frontend  
+      - frontend
 
   postgres:
     container_name: postgres
@@ -37,7 +36,7 @@ services:
     volumes:
       - postgres_data:/data/postgres
     networks:
-      - backend    
+      - backend
 
   adminer:
     image: adminer
@@ -47,7 +46,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - backend    
+      - backend
 volumes:
   postgres_data:
 networks:
