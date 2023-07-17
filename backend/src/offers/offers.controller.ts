@@ -17,8 +17,8 @@ import { JwtGuard } from '../auth/guards/jwtAuth.guard';
 import { WishesService } from '../wishes/wishes.service';
 
 @ApiTags('Offers')
-@UseGuards(JwtGuard)
 @Controller('offers')
+@UseGuards(JwtGuard)
 export class OffersController {
   constructor(
     private readonly offersService: OffersService,
@@ -30,6 +30,7 @@ export class OffersController {
     const { amount, itemId } = body;
     const wish = await this.wishesService.findOne(itemId);
     let offers;
+
     if (wish.price > amount && wish.price > wish.raised + amount) {
       offers = await this.offersService.create(req.user, wish, {
         amount: Math.floor(+amount * 100) / 100,
@@ -37,7 +38,7 @@ export class OffersController {
       const updateWish = {
         ...wish,
         raised: wish.raised + amount,
-        offers,
+        ownerId: offers,
       };
       await this.wishesService.update(wish, updateWish);
       return offers;

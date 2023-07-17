@@ -61,9 +61,9 @@ export class WishesService {
   }
 
   async update(oldWish: Wish, updateWish: UpdateWishDto) {
-    if (oldWish.price && oldWish.raised > 0) {
+    if (oldWish.price && oldWish.raised >= oldWish.price) {
       throw new ForbiddenException(
-        'Вы не можете изменять стоимость подарка, если уже есть желающие скинуться',
+        'Вы не можете скинуть на данный подарок',
       );
     }
     return await this.wishRepository.save({ ...oldWish, ...updateWish });
